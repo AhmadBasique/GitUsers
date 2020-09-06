@@ -1,0 +1,62 @@
+
+ <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <form class="form-inline" >
+    <a  >
+    <img (click)="Reload()"  src="/assets/GitHub-Mark.png" class="mr-sm-2 rounded-circle" style="width:45px;top: 0em;">
+  </a>
+    <input id="Name" class="form-control mr-sm-2" type="text" placeholder="Search or jump to..">
+    <button type="button" class="btn" (click)="Search()" style="color: white;" >Search</button>
+  </form>
+</nav>
+
+<div *ngIf="ShwBlk" style="overflow: auto; height: 100vh" >
+    <table style="width: 100%; overflow: auto" mat-table [dataSource]="UsersLst">
+       <ng-container  matColumnDef="Name">
+          <th
+             mat-header-cell
+            *matHeaderCellDef
+           >
+           
+          </th>
+          <td    mat-cell *matCellDef="let Users">
+          <div>
+            <div class="media border p-3 table-row">
+                <div class="media-left">
+                    <img class="avatar avatar-user" [src]="Users.avatar_url" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading"> {{ Users.login }}</h4>
+                  {{ Users.name }}
+                </div>
+                <a class="btn btn-info ml-3 mt-3" mat-tab-link (click)="GetRepos(Users)"> View  Repositories</a>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+       
+            <tr
+          mat-header-row
+          *matHeaderRowDef="UserGridColumns; sticky: true"
+        ></tr>
+        <tr
+           mat-row
+          *matRowDef="let row; columns: UserGridColumns"
+        ></tr>
+      </table>
+     
+</div>
+<div class="footer" [hidden]="!ShwBlk">
+   
+  <mat-paginator
+  
+  [pageSizeOptions]="[30]"
+  showFirstLastButtons
+  class="mat-paginator-sticky"
+  (page)="paginationClicked($event)"
+></mat-paginator>
+  </div>
+
+<div *ngIf="!ShwBlk" style="text-align: center; margin-top: 15%;">
+  <img   src="/assets/SearchLogo.png" class="mr-sm-2 rounded-circle" style="width:45px;top: 0em;">
+<p>{{ErrMsg}}</p>
+</div>

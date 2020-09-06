@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4" >
+      <img  [src]="Image" class="mr-3 mt-3 rounded-circle" style="width:200px;">
+      <h4> {{User.name}} </h4>
+      <p>{{UserName  }}</p>
+    </div>
+    <div class="col-sm-8" >
+      <mat-dialog-content>
+          <table style="width: 100%;" mat-table [dataSource]="ReposLst">
+            <ng-container matColumnDef="Name">
+               <th
+                 mat-header-cell
+                 *matHeaderCellDef
+                >
+               
+               </th>
+               <td   mat-cell *matCellDef="let Repos">
+                <div class="media border p-3">
+                  <div class="media-body">
+                    <h4> {{ Repos.name }} </h4>
+                    <p >{{ Repos.description }}</p>
+                    <p valign="bottom">Update on   {{Repos.updated_at | date}}</p>    
+                  </div>
+                  <a class="btn btn-info ml-3 mt-3" mat-tab-link [href]="Repos.html_url"> View on GitHub</a>
+                </div>
+                
+               </td>
+             </ng-container>
+             
+     
+       
+     
+             <tr
+               mat-header-row
+               *matHeaderRowDef="UserGridColumns; sticky: true"
+             ></tr>
+             <tr
+               mat-row
+               *matRowDef="let row; columns: UserGridColumns"
+             ></tr>
+           </table>
+           <mat-paginator
+         [pageSizeOptions]="[30]"
+         showFirstLastButtons
+         class="mat-paginator-sticky"
+         (page)="paginationClicked($event)"
+       ></mat-paginator>
+    </mat-dialog-content>
+    </div>
+  </div>
+</div>
+
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Close</button>
+      </mat-dialog-actions>
